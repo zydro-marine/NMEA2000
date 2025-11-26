@@ -50,7 +50,7 @@
 // Enumeration of different device types
 enum tN2kZydroDeviceModel {
     tN2kZydroDeviceModel_invalid=0,
-    tN2kZydroDeviceModel_estop=1
+    tN2kZydroDeviceModel_estop=1,
     tN2kZydroDeviceModel_autonomyCore=2
 };
 
