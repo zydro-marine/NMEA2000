@@ -73,12 +73,12 @@ enum tN2kZydroThrottleSetpointMode {
 
 // Enumeration of command types
 enum tN2kZydroCommand {
-   tN2kZydroCommand_invalid=0
+   tN2kZydroCommand_invalid=0,
    tN2kZydroCommand_parameterGet=1,
    tN2kZydroCommand_parameterGetAll=2,
    tN2kZydroCommand_parameterSet=3,
    tN2kZydroCommand_parameterReset=4,
-   tN2kZydroCommand_parameterResetAll=5,
+   tN2kZydroCommand_parameterResetAll=5
 };
 
 /**************************************************************************

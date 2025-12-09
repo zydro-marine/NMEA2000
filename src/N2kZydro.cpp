@@ -204,8 +204,8 @@ bool ParseN2kPGN65292(const tN2kMsg &N2kMsg, unsigned char &TargetID, uint64_t &
   if (N2kMsg.PGN!=65292L) return false;
   int Index=0;
   if (N2kMsg.Get2ByteUInt(Index)!=ZydroProprietary) return false;
-  N2kMsg.AddUInt64(ParamId);
-  N2kMsg.AddUInt64(ParamType);
-  N2kMsg.AddUInt64(ParamValue);
+  // N2kMsg.AddUInt64(ParamId);
+  // N2kMsg.AddUInt64(ParamType);
+  // N2kMsg.AddUInt64(ParamValue);
   return true;
 };
