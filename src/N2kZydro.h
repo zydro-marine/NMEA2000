@@ -51,7 +51,8 @@
 enum tN2kZydroDeviceModel {
     tN2kZydroDeviceModel_invalid=0,
     tN2kZydroDeviceModel_estop=1,
-    tN2kZydroDeviceModel_autonomyCore=2
+    tN2kZydroDeviceModel_autonomyCore=2,
+    tN2kZydroDeviceModel_devKit=3
 };
 
 // Enumeration of health status of a device
@@ -73,12 +74,12 @@ enum tN2kZydroThrottleSetpointMode {
 
 // Enumeration of command types
 enum tN2kZydroCommand {
-   tN2kZydroCommand_invalid=0
+   tN2kZydroCommand_invalid=0,
    tN2kZydroCommand_parameterGet=1,
    tN2kZydroCommand_parameterGetAll=2,
    tN2kZydroCommand_parameterSet=3,
    tN2kZydroCommand_parameterReset=4,
-   tN2kZydroCommand_parameterResetAll=5,
+   tN2kZydroCommand_parameterResetAll=5
 };
 
 /**************************************************************************
