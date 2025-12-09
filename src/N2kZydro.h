@@ -71,6 +71,16 @@ enum tN2kZydroThrottleSetpointMode {
     tN2kZydroThrottleSetpointMode_rpm=3
 };
 
+// Enumeration of command types
+enum tN2kZydroCommand {
+   tN2kZydroCommand_invalid=0
+   tN2kZydroCommand_parameterGet=1,
+   tN2kZydroCommand_parameterGetAll=2,
+   tN2kZydroCommand_parameterSet=3,
+   tN2kZydroCommand_parameterReset=4,
+   tN2kZydroCommand_parameterResetAll=5,
+};
+
 /**************************************************************************
  * \brief PGN 65280: Zydro "Product Heartbeat"
  * 
@@ -141,7 +151,53 @@ bool ParseN2kPGN65282(const tN2kMsg &N2kMsg, unsigned char &ThrottleID, tN2kZydr
 void SetN2kPGN65283(tN2kMsg &N2kMsg, unsigned char JoystickID, bool Connected, float Channel1, float Channel2, float Channel3, float Channel4, float Channel5, float Channel6, float Channel7, float Channel8);
 bool ParseN2kPGN65283(const tN2kMsg &N2kMsg, unsigned char &JoystickID, bool &Connected, float &Channel1, float &Channel2, float &Channel3, float &Channel4, float &Channel5, float &Channel6, float &Channel7, float &Channel8);
 
-/**************************************************************************/
+/**************************************************************************
+ * \brief PGN 65290: Zydro "Generic Command"
+ * 
+ * Encodes a generic command.
+ * 
+ * \param N2kMsg          Reference to a N2kMsg Object, 
+ *                        Output: NMEA2000 message ready to be send.
+ * \param TargetID        Target device for the command. If 0, the command should be interpreted as a broadcast to all devices.
+ * \param Command         Command type, from the tN2kZydroCommand enumeration.
+ * \param Param1          First parameter for the command. The meaning of this parameter is command-specific.
+ * \param Param2          Second parameter for the command. The meaning of this parameter is command-specific.
+ * \param Param2          Third parameter for the command. The meaning of this parameter is command-specific.
+ * \param Param2          Fourth parameter for the command. The meaning of this parameter is command-specific.
+ */
+void SetN2kPGN65290(tN2kMsg &N2kMsg, unsigned char TargetID, tN2kZydroCommand Command, uint64_t Param1, uint64_t Param2, uint64_t Param3, uint64_t Param4);
+bool ParseN2kPGN65290(const tN2kMsg &N2kMsg, unsigned char &TargetID, tN2kZydroCommand &Command, uint64_t &Param1, uint64_t &Param2, uint64_t &Param3, uint64_t &Param4);
 
+/**************************************************************************
+ * \brief PGN 65291: Zydro "Get Parameter"
+ * 
+ * Response to a request to read the value of a parameter.
+ * 
+ * \param N2kMsg          Reference to a N2kMsg Object, 
+ *                        Output: NMEA2000 message ready to be send.
+ * \param ParamId         Identifier for a parameter.
+ * \param ParamType       Data type of the parameter.
+ * \param ParamValue      Value of the parameter (cast to a uint64).
+ * \param IsPersisted     If true, the parameter value is persisted to EEPROM. If false, the parameter value is reset each boot. Device-specific.
+ */
+void SetN2kPGN65291(tN2kMsg &N2kMsg, uint64_t ParamId, uint64_t ParamType, uint64_t ParamValue, bool IsPersisted);
+bool ParseN2kPGN65291(const tN2kMsg &N2kMsg, uint64_t &ParamId, uint64_t &ParamType, uint64_t &ParamValue, bool &IsPersisted);
+
+/**************************************************************************
+ * \brief PGN 65292: Zydro "Set Parameter"
+ * 
+ * Write the value of a parameter.
+ * 
+ * \param N2kMsg          Reference to a N2kMsg Object, 
+ *                        Output: NMEA2000 message ready to be send.
+ * \param TargetID        Target device for the command. If 0, the command should be interpreted as a broadcast to all devices.
+ * \param ParamId         Identifier for a parameter.
+ * \param ParamType       Data type of the parameter.
+ * \param ParamValue      Value of the parameter (cast to a uint64).
+ */
+void SetN2kPGN65292(tN2kMsg &N2kMsg, unsigned char TargetID, uint64_t ParamId, uint64_t ParamType, uint64_t ParamValue);
+bool ParseN2kPGN65292(const tN2kMsg &N2kMsg, unsigned char &TargetID, uint64_t &ParamId, uint64_t &ParamType, uint64_t &ParamValue);
+
+/**************************************************************************/
 #endif
 

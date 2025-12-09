@@ -134,3 +134,78 @@ bool ParseN2kPGN65283(const tN2kMsg &N2kMsg, unsigned char &JoystickID, bool &Co
   Channel8=N2kMsg.GetFloat(Index);
   return true;
 };
+
+/**************************************************************************/
+// PGN 65290: Zydro "Generic Command"
+
+void SetN2kPGN65290(tN2kMsg &N2kMsg, unsigned char TargetID, tN2kZydroCommand Command, uint64_t Param1, uint64_t Param2, uint64_t Param3, uint64_t Param4) {
+  N2kMsg.SetPGN(65290L);
+  N2kMsg.Priority=5;
+  N2kMsg.Add2ByteUInt(ZydroProprietary);
+  N2kMsg.AddByte((unsigned char)TargetID);
+  N2kMsg.AddByte((unsigned char)Command);
+  N2kMsg.AddUInt64(Param1);
+  N2kMsg.AddUInt64(Param2);
+  N2kMsg.AddUInt64(Param3);
+  N2kMsg.AddUInt64(Param4);
+};
+
+bool ParseN2kPGN65290(const tN2kMsg &N2kMsg, unsigned char &TargetID, tN2kZydroCommand &Command, uint64_t &Param1, uint64_t &Param2, uint64_t &Param3, uint64_t &Param4) {
+  if (N2kMsg.PGN!=65290L) return false;
+  int Index=0;
+  if (N2kMsg.Get2ByteUInt(Index)!=ZydroProprietary) return false;
+  TargetID=N2kMsg.GetByte(Index);
+  Command=(tN2kZydroCommand)(N2kMsg.GetByte(Index));
+  Param1=N2kMsg.GetUInt64(Index);
+  Param2=N2kMsg.GetUInt64(Index);
+  Param3=N2kMsg.GetUInt64(Index);
+  Param4=N2kMsg.GetUInt64(Index);
+  return true;
+};
+
+/**************************************************************************/
+// PGN 65291: Zydro "Get Parameter"
+
+void SetN2kPGN65291(tN2kMsg &N2kMsg, uint64_t ParamId, uint64_t ParamType, uint64_t ParamValue, bool IsPersisted) {
+  N2kMsg.SetPGN(65291L);
+  N2kMsg.Priority=5;
+  N2kMsg.Add2ByteUInt(ZydroProprietary);
+  N2kMsg.AddUInt64(ParamId);
+  N2kMsg.AddUInt64(ParamType);
+  N2kMsg.AddUInt64(ParamValue);
+  N2kMsg.AddByte((unsigned char)IsPersisted);
+};
+
+bool ParseN2kPGN65291(const tN2kMsg &N2kMsg, uint64_t &ParamId, uint64_t &ParamType, uint64_t &ParamValue, bool &IsPersisted) {
+  if (N2kMsg.PGN!=65291L) return false;
+  int Index=0;
+  if (N2kMsg.Get2ByteUInt(Index)!=ZydroProprietary) return false;
+  ParamId=N2kMsg.GetUInt64(Index);
+  ParamType=N2kMsg.GetUInt64(Index);
+  ParamValue=N2kMsg.GetUInt64(Index);
+  IsPersisted=(bool)N2kMsg.GetByte(Index);
+  return true;
+};
+
+/**************************************************************************/
+// PGN 65292: Zydro "Set Parameter"
+
+void SetN2kPGN65292(tN2kMsg &N2kMsg, unsigned char TargetID, uint64_t ParamId, uint64_t ParamType, uint64_t ParamValue) {
+  N2kMsg.SetPGN(65292L);
+  N2kMsg.Priority=5;
+  N2kMsg.Add2ByteUInt(ZydroProprietary);
+  N2kMsg.AddByte(TargetID);
+  N2kMsg.AddUInt64(ParamId);
+  N2kMsg.AddUInt64(ParamType);
+  N2kMsg.AddUInt64(ParamValue);
+};
+
+bool ParseN2kPGN65292(const tN2kMsg &N2kMsg, unsigned char &TargetID, uint64_t &ParamId, uint64_t &ParamType, uint64_t &ParamValue) {
+  if (N2kMsg.PGN!=65292L) return false;
+  int Index=0;
+  if (N2kMsg.Get2ByteUInt(Index)!=ZydroProprietary) return false;
+  N2kMsg.AddUInt64(ParamId);
+  N2kMsg.AddUInt64(ParamType);
+  N2kMsg.AddUInt64(ParamValue);
+  return true;
+};
