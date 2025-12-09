@@ -79,6 +79,7 @@ bool ParseN2kPGN65281(const tN2kMsg &N2kMsg, unsigned char &ThrottleID, tN2kZydr
 void SetN2kPGN65282(tN2kMsg &N2kMsg, unsigned char ThrottleID, tN2kZydroThrottleSetpointMode Mode, float TargetValue, float CurrentValue, unsigned char CurrentGear) {
   N2kMsg.SetPGN(65282L);
   N2kMsg.Priority=5;
+  N2kMsg.SetIsTPMessage(true);
   N2kMsg.Add2ByteUInt(ZydroProprietary);
   N2kMsg.AddByte((unsigned char)ThrottleID);
   N2kMsg.AddByte((unsigned char)Mode);
@@ -105,6 +106,7 @@ bool ParseN2kPGN65282(const tN2kMsg &N2kMsg, unsigned char &ThrottleID, tN2kZydr
 void SetN2kPGN65283(tN2kMsg &N2kMsg, unsigned char JoystickID, bool Connected, float Channel1, float Channel2, float Channel3, float Channel4, float Channel5, float Channel6, float Channel7, float Channel8) {
   N2kMsg.SetPGN(65283L);
   N2kMsg.Priority=5;
+  N2kMsg.SetIsTPMessage(true);
   N2kMsg.Add2ByteUInt(ZydroProprietary);
   N2kMsg.AddByte((unsigned char)JoystickID);
   N2kMsg.AddByte((unsigned char)Connected);
@@ -141,6 +143,7 @@ bool ParseN2kPGN65283(const tN2kMsg &N2kMsg, unsigned char &JoystickID, bool &Co
 void SetN2kPGN65290(tN2kMsg &N2kMsg, unsigned char TargetID, tN2kZydroCommand Command, uint64_t Param1, uint64_t Param2, uint64_t Param3, uint64_t Param4) {
   N2kMsg.SetPGN(65290L);
   N2kMsg.Priority=5;
+  N2kMsg.SetIsTPMessage(true);
   N2kMsg.Add2ByteUInt(ZydroProprietary);
   N2kMsg.AddByte((unsigned char)TargetID);
   N2kMsg.AddByte((unsigned char)Command);
@@ -169,6 +172,7 @@ bool ParseN2kPGN65290(const tN2kMsg &N2kMsg, unsigned char &TargetID, tN2kZydroC
 void SetN2kPGN65291(tN2kMsg &N2kMsg, uint64_t ParamId, uint64_t ParamType, uint64_t ParamValue, bool IsPersisted) {
   N2kMsg.SetPGN(65291L);
   N2kMsg.Priority=5;
+  N2kMsg.SetIsTPMessage(true);
   N2kMsg.Add2ByteUInt(ZydroProprietary);
   N2kMsg.AddUInt64(ParamId);
   N2kMsg.AddUInt64(ParamType);
@@ -193,6 +197,7 @@ bool ParseN2kPGN65291(const tN2kMsg &N2kMsg, uint64_t &ParamId, uint64_t &ParamT
 void SetN2kPGN65292(tN2kMsg &N2kMsg, unsigned char TargetID, uint64_t ParamId, uint64_t ParamType, uint64_t ParamValue) {
   N2kMsg.SetPGN(65292L);
   N2kMsg.Priority=5;
+  N2kMsg.SetIsTPMessage(true);
   N2kMsg.Add2ByteUInt(ZydroProprietary);
   N2kMsg.AddByte(TargetID);
   N2kMsg.AddUInt64(ParamId);
@@ -204,8 +209,9 @@ bool ParseN2kPGN65292(const tN2kMsg &N2kMsg, unsigned char &TargetID, uint64_t &
   if (N2kMsg.PGN!=65292L) return false;
   int Index=0;
   if (N2kMsg.Get2ByteUInt(Index)!=ZydroProprietary) return false;
-  // N2kMsg.AddUInt64(ParamId);
-  // N2kMsg.AddUInt64(ParamType);
-  // N2kMsg.AddUInt64(ParamValue);
+  TargetID=N2kMsg.GetByte(Index);
+  ParamId=N2kMsg.GetUInt64(Index);
+  ParamType=N2kMsg.GetUInt64(Index);
+  ParamValue=N2kMsg.GetUInt64(Index);
   return true;
 };
