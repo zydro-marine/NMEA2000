@@ -52,7 +52,8 @@ enum tN2kZydroDeviceModel {
     tN2kZydroDeviceModel_invalid=0,
     tN2kZydroDeviceModel_estop=1,
     tN2kZydroDeviceModel_autonomyCore=2,
-    tN2kZydroDeviceModel_devKit=3
+    tN2kZydroDeviceModel_devKit=3,
+    tN2kZydroDeviceModel_elrsReceiver=4
 };
 
 // Enumeration of health status of a device
