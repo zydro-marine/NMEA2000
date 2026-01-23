@@ -106,18 +106,19 @@ bool ParseN2kPGN65282(const tN2kMsg &N2kMsg, unsigned char &ThrottleID, tN2kZydr
 void SetN2kPGN65283(tN2kMsg &N2kMsg, unsigned char JoystickID, bool Connected, float Channel1, float Channel2, float Channel3, float Channel4, float Channel5, float Channel6, float Channel7, float Channel8) {
   N2kMsg.SetPGN(65283L);
   N2kMsg.Priority=5;
-  N2kMsg.SetIsTPMessage(true);
+  // N2kMsg.SetIsTPMessage(true);
   N2kMsg.Add2ByteUInt(ZydroProprietary);
   N2kMsg.AddByte((unsigned char)JoystickID);
   N2kMsg.AddByte((unsigned char)Connected);
-  N2kMsg.AddFloat(Channel1);
-  N2kMsg.AddFloat(Channel2);
-  N2kMsg.AddFloat(Channel3);
-  N2kMsg.AddFloat(Channel4);
-  N2kMsg.AddFloat(Channel5);
-  N2kMsg.AddFloat(Channel6);
-  N2kMsg.AddFloat(Channel7);
-  N2kMsg.AddFloat(Channel8);
+  N2kMsg.AddByte(128 + (int)(128 * Channel1));
+  N2kMsg.AddByte(128 + (int)(128 * Channel2));
+  // N2kMsg.AddFloat(Channel2);
+  // N2kMsg.AddFloat(Channel3);
+  // N2kMsg.AddFloat(Channel4);
+  // N2kMsg.AddFloat(Channel5);
+  // N2kMsg.AddFloat(Channel6);
+  // N2kMsg.AddFloat(Channel7);
+  // N2kMsg.AddFloat(Channel8);
 };
 
 bool ParseN2kPGN65283(const tN2kMsg &N2kMsg, unsigned char &JoystickID, bool &Connected, float &Channel1, float &Channel2, float &Channel3, float &Channel4, float &Channel5, float &Channel6, float &Channel7, float &Channel8) {
@@ -126,14 +127,14 @@ bool ParseN2kPGN65283(const tN2kMsg &N2kMsg, unsigned char &JoystickID, bool &Co
   if (N2kMsg.Get2ByteUInt(Index)!=ZydroProprietary) return false;
   JoystickID=N2kMsg.GetByte(Index);
   Connected=(bool)(N2kMsg.GetByte(Index));
-  Channel1=N2kMsg.GetFloat(Index);
-  Channel2=N2kMsg.GetFloat(Index);
-  Channel3=N2kMsg.GetFloat(Index);
-  Channel4=N2kMsg.GetFloat(Index);
-  Channel5=N2kMsg.GetFloat(Index);
-  Channel6=N2kMsg.GetFloat(Index);
-  Channel7=N2kMsg.GetFloat(Index);
-  Channel8=N2kMsg.GetFloat(Index);
+  Channel1=(N2kMsg.GetByte(Index) - 128) / 128.0f;
+  Channel2=(N2kMsg.GetByte(Index) - 128) / 128.0f;
+  // Channel3=N2kMsg.GetFloat(Index);
+  // Channel4=N2kMsg.GetFloat(Index);
+  // Channel5=N2kMsg.GetFloat(Index);
+  // Channel6=N2kMsg.GetFloat(Index);
+  // Channel7=N2kMsg.GetFloat(Index);
+  // Channel8=N2kMsg.GetFloat(Index);
   return true;
 };
 
