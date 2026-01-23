@@ -110,8 +110,14 @@ void SetN2kPGN65283(tN2kMsg &N2kMsg, unsigned char JoystickID, bool Connected, f
   N2kMsg.Add2ByteUInt(ZydroProprietary);
   N2kMsg.AddByte((unsigned char)JoystickID);
   N2kMsg.AddByte((unsigned char)Connected);
-  N2kMsg.AddByte(128 + (int)(128 * Channel1));
-  N2kMsg.AddByte(128 + (int)(128 * Channel2));
+  N2kMsg.AddByte(128 + (int)(127 * Channel1));
+  N2kMsg.AddByte(128 + (int)(127 * Channel2));
+  Channel3 = 0.0f;
+  Channel4 = 0.0f;
+  Channel5 = 0.0f;
+  Channel6 = 0.0f;
+  Channel7 = 0.0f;
+  Channel8 = 0.0f;
   // N2kMsg.AddFloat(Channel2);
   // N2kMsg.AddFloat(Channel3);
   // N2kMsg.AddFloat(Channel4);
