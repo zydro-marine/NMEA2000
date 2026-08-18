@@ -234,6 +234,26 @@ bool ParseN2kPGN65285(const tN2kMsg &N2kMsg, unsigned char &SteeringID, tN2kZydr
 }
 
 /**************************************************************************/
+// PGN 65286: Zydro "Engine Control"
+
+void SetN2kPGN65286(tN2kMsg &N2kMsg, unsigned char EngineID, bool Enabled) {
+  N2kMsg.SetPGN(65286L);
+  N2kMsg.Priority=3;
+  N2kMsg.Add2ByteUInt(ZydroProprietary);
+  N2kMsg.AddByte((unsigned char)EngineID);
+  N2kMsg.AddByte((unsigned char)(Enabled ? 1 : 0));
+}
+
+bool ParseN2kPGN65286(const tN2kMsg &N2kMsg, unsigned char &EngineID, bool &Enabled) {
+  if (N2kMsg.PGN!=65286L) return false;
+  int Index=0;
+  if (N2kMsg.Get2ByteUInt(Index)!=ZydroProprietary) return false;
+  EngineID=N2kMsg.GetByte(Index);
+  Enabled=(N2kMsg.GetByte(Index) != 0);
+  return true;
+}
+
+/**************************************************************************/
 // PGN 65290: Zydro "Generic Command"
 
 void SetN2kPGN65290(tN2kMsg &N2kMsg, unsigned char TargetID, tN2kZydroCommand Command, uint64_t Param1, uint64_t Param2, uint64_t Param3, uint64_t Param4) {

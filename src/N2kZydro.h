@@ -56,7 +56,8 @@ enum tN2kZydroDeviceModel {
     tN2kZydroDeviceModel_elrsReceiver=4,
     tN2kZydroDeviceModel_relay=5,
     tN2kZydroDeviceModel_torqlinkController=6,
-    tN2kZydroDeviceModel_steeringController=7
+    tN2kZydroDeviceModel_steeringController=7,
+    tN2kZydroDeviceModel_outboardDrive=8
 };
 
 // Enumeration of health status of a device
@@ -210,6 +211,21 @@ bool ParseN2kPGN65284(const tN2kMsg &N2kMsg, unsigned char &SteeringID, tN2kZydr
  */
 void SetN2kPGN65285(tN2kMsg &N2kMsg, unsigned char SteeringID, tN2kZydroSteeringSetpointMode Mode, unsigned char TargetValue, unsigned char CurrentValue);
 bool ParseN2kPGN65285(const tN2kMsg &N2kMsg, unsigned char &SteeringID, tN2kZydroSteeringSetpointMode &Mode, unsigned char &TargetValue, unsigned char &CurrentValue);
+
+/**************************************************************************
+ * \brief PGN 65286: Zydro "Engine Control"
+ *
+ * Command an engine / drive channel to enable (power/ignition on) or disable
+ * (power/ignition off). Controllers may enforce a post-enable cooldown before
+ * accepting throttle.
+ *
+ * \param N2kMsg          Reference to a N2kMsg Object,
+ *                        Output: NMEA2000 message ready to be send.
+ * \param EngineID        Integer ID for the engine channel; typically 0.
+ * \param Enabled         true = enable / arm, false = disable / disarm.
+ */
+void SetN2kPGN65286(tN2kMsg &N2kMsg, unsigned char EngineID, bool Enabled);
+bool ParseN2kPGN65286(const tN2kMsg &N2kMsg, unsigned char &EngineID, bool &Enabled);
 
 /**************************************************************************
  * \brief PGN 65290: Zydro "Generic Command"
